@@ -1,0 +1,4 @@
+
+Inicie um servidor web com PHP através do comando:
+
+php -S localhost:8080 -t public.

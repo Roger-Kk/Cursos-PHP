@@ -1,17 +1,7 @@
 <?php
 
-require __DIR__ . "/funcoes.php";
-
-//OPERADORES
-$a = 10; // Atribui o valor 10 à variável $a
-$b = 5; // Atribui o valor 5 à variável $b
-$c = 30; // Atribui o valor 30 à variável $c
-
-$igual = $b == $a; // Nesse caso, a variável $igual ficará com o valor *false*, pois o valor de $b não é igual ao valor de $a.
-$diferente = $b != $c; // A variável $diferente ficará com o valor *true*, pois o valor de $b é diferente do valor de $c.
-$maior = $b > $a; // A variável maior ficará com o valor *false*, pois o valor de $b é menor que o valor de $a.
-$menorIgual = $b <= $c; // A variável $menorIgual ficará com o valor *true*, pois o valor de $b é menor que o valor de $c.
-
+//require __DIR__ . "/src/funcoes.php";
+include __DIR__ . "/src/funcoes.php";
 
 //Aplicação Screen Match
  
@@ -35,23 +25,6 @@ foreach ($notas as $nota){
     $somaNotas += $nota;
 }
 
-//WHILE
-/*
-$contador = 1;
-while($argv[$contador] != 0){
-    $somaNotas += $argv[$contador++];
-};
-*/
-
-//DO WHILE
-/*
-do {
-
-} while (){
-
-}
-*/
-
 $quantidadeNotas = $argc - 1; //o $arg contém o índice do valor passados pela linha de comando
 $notaFilme = array_sum($notas)/$quantidadeNotas;
 $planoPrime = true;
@@ -72,7 +45,7 @@ $genero = match ($nomeFilme){
     default => "desconhecido",
 };
 echo "O gênero do filme é ".$genero ."\n";
-
+/*
 //Array
 $notasParaOFilme = [
     10,
@@ -82,9 +55,6 @@ $notasParaOFilme = [
     6.5,
     4
 ];
-
-//var_dump($notasParaOFilme);
-
 //Array associativo
 $filme = [
     "nome" => "Thor - Ragnarok",
@@ -92,6 +62,13 @@ $filme = [
     "nota" => 7.8,
     "genero" => "super-herói",
 ];
+*/
+
+//Parâmetros nomeados
+//O PHP tem como estabelecer parâmetros nomeados incluindo o nome do parametro definido na função
+//dentro do parentesis ao chamar a função usando "nome_parametro: valor_parametro"
+$filme = criaFilme(nome:"Thor: Ragnarok", anoLancamento: 2021, nota: 7.8, genero:"super-herói");
+
 echo $filme["nome"]."\n";
 echo $filme["nota"]."\n";
 
