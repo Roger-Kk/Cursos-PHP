@@ -1,0 +1,14 @@
+{
+    "name": "roger/buscador-cursos",
+    "description": "Projeto do curso Alura - PHP Composer - que busca cursos da Alura.",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Roger\\BuscadorCursos\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.8",
+        "symfony/dom-crawler": "^4.2"
+    }
+}
