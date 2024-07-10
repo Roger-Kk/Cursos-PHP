@@ -1,11 +1,19 @@
 <?php
 
 class Conta {
-    private string $cpfTitular;
-    private string $nomeTitular;
+    private $titular;
 //  private float $saldo = 0;   //Sempre que for instanciado um objeto Conta, o valor inicial do saldo será 0.
     private $saldo;
     private static $numeroDeContas=0; //propriedade estática (escopo global e não de uma instância de uma classe)
+
+       //método construtor
+       public function __construct(Titular $titular){
+        $this->titular = $titular;
+        $this->saldo = 0;
+       // Conta::$numeroDeContas++; NomeClasse:: vai acessar um atributo estático da classe
+        self::$numeroDeContas++;  //Também se utiliza a palavra self 
+    }
+
     /*
     public function sacar($contaASacar, float $valorASacar){
         if ($valorASacar > $contaASacar ->saldo){
@@ -58,38 +66,14 @@ class Conta {
         return $this ->saldo;
     }
 
-    public function recuperarCpfTitular(): string{
-        return $this ->cpfTitular;
-    }
-    //Não precisa mais, uma vez que o construtor (abaixo) já solicita o CPF e Nome ao criar a conta
-    /*public function defineCpfTitular(string $cpf){
-        $this-> cpfTitular = $cpf;
-    }*/
-
-    public function recuperarNomeTitular(): string{
-        return $this ->nomeTitular;
-    }
-    /*
-    public function defineNomeTitular(string $nome){
-        $this-> nomeTitular = $nome;
-    }*/
-
-    //método construtor
-    public function __construct(string $cpfTitular, string $nomeTitular){
-        $this->cpfTitular = $cpfTitular;
-        $this->validaNomeTitular($nomeTitular);
-        $this->nomeTitular = $nomeTitular;
-        $this->saldo = 0;
-       // Conta::$numeroDeContas++; NomeClasse:: vai acessar um atributo estático da classe
-        self::$numeroDeContas++;  //Também se utiliza a palavra self 
+    public function recuperarNomeTitular():string{
+        return $this->titular->recuperaNome();
     }
 
-    private function validaNomeTitular(string $nomeTitular){
-        if(strlen($nomeTitular)< 5){
-            echo "Nome precisa ter pelo menos 5 caracteres."; 
-            exit();
-        }
+    public function recuperarCpfTitular():string{
+        return $this->titular->recuperaCpf();
     }
+  
   
     public static function recuperaNumeroDeContas(): int{
         //return Conta::$numeroDeContas;   A palavra 'self' é utilizada para se referir a classe no escopo global

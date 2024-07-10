@@ -1,15 +1,18 @@
 <?php
-
 require 'src/Conta.php';
+require 'src/Titular.php';
+require 'src/Cpf.php';
 
-$primeiraConta = new Conta(cpfTitular: '123.456.789-10', nomeTitular: "Rogerzão"); 
+$roger = new Titular(new Cpf(numero: '123.456.789-10'), nome:'Rogerzão');
+$primeiraConta = new Conta($roger); 
 //var_dump($primeiraConta); 
 $primeiraConta -> depositar(valorADepositar: 500);
 $primeiraConta -> sacar(valorASacar: 300);
 
-//Não precisa, uma vez que o construtor solicita NOME e CPF ao criar a Conta
-//$primeiraConta->defineCpfTitular(cpf:'123.456.789-10');
-//$primeiraConta->defineNomeTitular(nome:'Rogerzão'); 
+$rafa = new Titular(new Cpf(numero: '001.002.003.-04'), nome: 'Rafinha');
+$segundaConta  = new Conta($rafa);
+//var_dump($segundaConta);
+
 
 echo $primeiraConta->recuperarCpfTitular().PHP_EOL;
 echo $primeiraConta->recuperarNomeTitular().PHP_EOL;
