@@ -1,9 +1,14 @@
 <?php
 
+namespace ScreenMatch\Modelo;
+
 // Abstração: Uma classe abstrata pode ter métodos abstratos e não podem ser instanciadas
 abstract class Titulo implements Avaliavel
 {
-    private array $notas;
+
+use ComAvaliacao;
+//ao usar uma Trait, é como se o PHP copiasse e colasse os métodos da trait,
+// sem que a classe seja estendida da ComAvaliacao
 
     public function __construct(
         /*
@@ -15,19 +20,6 @@ abstract class Titulo implements Avaliavel
         public $anoLancamento
     ) {
         $this->notas = [];
-    }
-
-    public function avalia(float $nota): void
-    {
-        $this->notas[] = $nota;
-    }
-
-    public function media(): float
-    {
-        $somaNotas = array_sum($this->notas);
-        $quantidadeNotas = count($this->notas);
-
-        return $somaNotas / $quantidadeNotas;
     }
 
     abstract public function duracaoEmMinutos(): int;

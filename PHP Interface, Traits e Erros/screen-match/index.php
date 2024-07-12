@@ -1,6 +1,9 @@
 <?php
 
+require 'autoload.php';
 //require "src/Modelo/Genero.php"; OBS: enum só é possível executar a partir do PHP 8.1
+/*
+require "src/Modelo/ComAvaliacao.php";
 require "src/Modelo/Avaliavel.php";
 require "src/Modelo/Episodio.php";
 require "src/Modelo/Titulo.php";
@@ -8,6 +11,15 @@ require "src/Modelo/Serie.php";
 require "src/Modelo/Filme.php";
 require "src/Calculos/CalculadoraDeMaratona.php";
 require "src/Calculos/ConversorNotaEstrela.php";
+*///Ao utilizar a estrutura lógica de namespaces, não é necessário mais os
+//requires.
+
+use ScreenMatch\Modelo\{
+     Filme, Episodio, Serie, Genero, Titulo
+};
+use ScreenMatch\Calculos\{
+    CalculadoraDeMaratona, ConversorNotaEstrela
+};
 
 echo "Bem-vindo(a) ao ScreenMatch\n";
 
