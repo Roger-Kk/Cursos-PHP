@@ -1,7 +1,7 @@
 <?php
 
 class Titular{
-    private $cpf;
+    private string $cpf;
     private string $nome;
 
     public function __construct(Cpf $numero, string $nome){

@@ -1,4 +1,6 @@
 <?php
+//require 'src/Cliente.php';
+require 'src/Profissao.php';
 require 'src/Conta.php';
 require 'src/Titular.php';
 require 'src/Cpf.php';
