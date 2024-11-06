@@ -8,7 +8,7 @@
 //- A senha do usuário PDO(dsn:'sqlite:host=.....dbname=....', $usuario, $senha);
 // e parâmetros extras: PDO(dsn:'sqlite:host=.....dbname=....', $usuario, $senha, []);
 
-$dataPath = __DIR__.'./banco.sqlite';
+$dataPath = __DIR__.'/banco.sqlite';
 $pdo = new PDO(dsn:'sqlite' . $dataPath);
 
 echo 'Conectado'; 
