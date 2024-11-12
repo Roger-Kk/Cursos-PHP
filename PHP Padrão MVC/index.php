@@ -7,9 +7,12 @@
     $password = '';
 
     try{
-    $conn = new PDO("mysql:host = $host; dbname = $dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $conn -> query('SELECT * FROM videos;') ->fetchAll(PDO::FETCH_ASSOC); 
+    $pdo = new PDO("mysql:host = $host; dbname = $dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $query = "SELECT * FROM padrao_mvc.videos;";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $videoList = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo 'Erro de conexão: ' . $e->getMessage();
     }
@@ -36,7 +39,7 @@
     <header>
 
         <nav class="cabecalho">
-            <a class="logo" href="./index.html"></a>
+            <a class="logo" href="./index.php"></a>
 
             <div class="cabecalho__icones">
                 <a href="./pages/enviar-video.html" class="cabecalho__videos"></a>
