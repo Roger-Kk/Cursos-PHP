@@ -14,20 +14,7 @@ $video = [
     'title' => "",
 ];
 
-//tratando as variáveis caso receba um valor inesperado de tipo diferente de array: 
-if (is_array($video) && isset($video['url'])) {
-    $valorUrl = $video['url'];
-} else {
-    $valorUrl = null; // ou um valor padrão
-} 
-if (is_array($video) && isset($video['title'])){
-    $valorTitulo = $video['title'];
-} else {
-    $valorTitulo = null; // ou um valor padrão
-}
-
-
-if($id !== false){
+if($id !== false && isset($id)){
     try{
         $pdo = new PDO("mysql:host = $host; dbname = $dbname", $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -40,6 +27,19 @@ if($id !== false){
             echo 'Erro de conexão: ' . $e->getMessage();
         }
 }
+
+//tratando as variáveis caso receba um valor inesperado de tipo diferente de array: 
+    if (is_array($video) && isset($video['url'])) {
+        $valorUrl = $video['url'];
+    } else {
+        $valorUrl = null; // ou um valor padrão
+    } 
+    if (is_array($video) && isset($video['title'])){
+        $valorTitulo = $video['title'];
+    } else {
+        $valorTitulo = null; // ou um valor padrão
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -76,7 +76,7 @@ if($id !== false){
     <main class="container">
 
         <form class="container__formulario" 
-            action="<?= $id === false ? '/novo-video.php' : '/editar-video.php'. $id; ?>" 
+            action="<?= $id !== false && isset($id) ? '/editar-video.php?id=' : '/novo-video.php' . $id; ?>" 
             method="post">
             <h2 class="formulario__titulo">Envie um vídeo!</h3>
                 <div class="formulario__campo">
