@@ -30,8 +30,8 @@ if($url === false){
 }
 $titulo = filter_input(INPUT_POST, 'titulo');
 if($titulo === false ){
-header('Location: /index.php?sucesso=0');
-exit();
+    header('Location: /index.php?sucesso=0');
+    exit();
 }
 
 try{

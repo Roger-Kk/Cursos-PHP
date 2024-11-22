@@ -10,9 +10,22 @@ $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 //var_dump($id);
 //die();
 $video = [
-    'url' => '',
-    'title' => '',
+    'url' => "",
+    'title' => "",
 ];
+
+//tratando as variáveis caso receba um valor inesperado de tipo diferente de array: 
+if (is_array($video) && isset($video['url'])) {
+    $valorUrl = $video['url'];
+} else {
+    $valorUrl = null; // ou um valor padrão
+} 
+if (is_array($video) && isset($video['title'])){
+    $valorTitulo = $video['title'];
+} else {
+    $valorTitulo = null; // ou um valor padrão
+}
+
 
 if($id !== false){
     try{
@@ -50,10 +63,10 @@ if($id !== false){
     <header>
 
         <nav class="cabecalho">
-            <a class="logo" href="../index.php"></a>
+            <a class="logo" href="/"></a>
 
             <div class="cabecalho__icones">
-                <a href="./index.php" class="cabecalho__videos"></a>
+                <a href="./formulario.php" class="cabecalho__videos"></a>
                 <a href="../pages/login.html" class="cabecalho__sair">Sair</a>
             </div>
         </nav>
@@ -63,31 +76,29 @@ if($id !== false){
     <main class="container">
 
         <form class="container__formulario" 
-            action="<?php echo $id !== false ? '/editar-video.php' : '/novo-video.php' . $id; ?>" 
-            method="POST">
+            action="<?= $id === false ? '/novo-video.php' : '/editar-video.php'. $id; ?>" 
+            method="post">
             <h2 class="formulario__titulo">Envie um vídeo!</h3>
                 <div class="formulario__campo">
                     <label class="campo__etiqueta" for="url">Link embed</label>
-                    <input 
-                        value = "<?= $video['url'];?>"
+                    <input name= 'url'
+                        value = "<?= $valorUrl;?>"
                         class="campo__escrita"
                         required
-                        placeholder="Por exemplo: https://www.youtube.com/embed/FAY1K2aUg5g" 
+                        placeholder="Exemplo: https://www.youtube.com/embed/FAY1K2aUg5g" 
                         id='url' />
                 </div>
-
 
                 <div class="formulario__campo">
                     <label class="campo__etiqueta" for="titulo">Titulo do vídeo</label>
                     <input 
-                        value = "<?= $video['title'];?>"
                         name="titulo" 
+                        value = "<?= $valorTitulo;?>"
                         class="campo__escrita" 
                         required 
-                        placeholder="Neste campo, dê o nome do vídeo"
+                        placeholder="Escreva o nome do vídeo"
                         id='titulo' />
                 </div>
-
                 <input class="formulario__botao" type="submit" value="Enviar" />
         </form>
 
