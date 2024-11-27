@@ -66,7 +66,7 @@ if($id !== false && isset($id)){
             <a class="logo" href="/"></a>
 
             <div class="cabecalho__icones">
-                <a href="./formulario.php" class="cabecalho__videos"></a>
+                <a href="./novo-video" class="cabecalho__videos"></a>
                 <a href="../pages/login.html" class="cabecalho__sair">Sair</a>
             </div>
         </nav>
@@ -75,9 +75,10 @@ if($id !== false && isset($id)){
 
     <main class="container">
 
-        <form class="container__formulario" 
-            action="<?= $id !== false && isset($id) ? '/editar-video.php?id=' : '/novo-video.php' . $id; ?>" 
+        <form class="container__formulario"  
             method="post">
+            <!-- Essa action estava dentro do formulário, e não é mais necessária uma vez que se usa o frontcontroler no arquivo index.php -->
+            <!-- action="<?= $id !== false && isset($id) ? '/editar-video.php?id=' . $id : '/novo-video.php'; ?> -->"
             <h2 class="formulario__titulo">Envie um vídeo!</h3>
                 <div class="formulario__campo">
                     <label class="campo__etiqueta" for="url">Link embed</label>
