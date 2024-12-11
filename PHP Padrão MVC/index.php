@@ -31,6 +31,20 @@ $pdo = new PDO("mysql:host = $host; dbname = $dbname", $username, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $videoRepository = new VideoRepository($pdo);
 
+$routes = require_once __DIR__ . '/config/routes.php';
+
+$pathInfo = $_SERVER['PATH_INFO'] ?? '/';
+$httpMethod = $_SERVER['REQUEST_METHOD'];
+
+$key = "$httpMethod|$pathInfo";
+if(array_key_exists($key, $routes)){
+    $controllerClass = $routes["$httpMethod|$pathInfo"];
+    $controller = new $controllerClass($videoRepository);
+} else {
+    $controller = new Error404Controller();
+}
+/* TRECHO DE COD QUE FOI SUBSTITUIDO PELO ROUTER: 
+
 if(!array_key_exists('PATH_INFO', $_SERVER) || $_SERVER['PATH_INFO']==='/'){
     $controller = new VideoListController($videoRepository);
 }elseif($_SERVER['PATH_INFO']==='/novo-video'){
@@ -51,5 +65,5 @@ if(!array_key_exists('PATH_INFO', $_SERVER) || $_SERVER['PATH_INFO']==='/'){
    
    $controller = new Error404Controller();
 }
-
+*/
 $controller->processaRequisicao();
