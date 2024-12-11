@@ -2,23 +2,54 @@
 
 declare(strict_types=1);
 
-//Variável global que acessa os cabeçalho da url
-//var_dump($_SERVER);
+use Alura\MVC\Controller\{
+    VideoListController,
+    Controller,
+    DeleteVideoController,
+    EditVideoController,
+    Error404Controller,
+    NewVideoController,
+    VideoFormController,
+};
+use Alura\MVC\Repository\VideoRepository;
+
+require_once __DIR__.'/vendor/autoload.php';
+
+$host = 'localhost';
+$dbname = 'padrao_mvc';
+$username = 'root';
+$password = '';
+try{
+    $pdo = new PDO("mysql:host = $host; dbname = $dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //testar a conexão com o BD:
+    //echo "Conexão bem-sucedida. Banco de dados selecionado: $dbname";
+} catch(PDOException $e){
+    echo "Erro de conexão com Banco de Dados: " . $e->getMessage();
+}
+$pdo = new PDO("mysql:host = $host; dbname = $dbname", $username, $password);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$videoRepository = new VideoRepository($pdo);
 
 if(!array_key_exists('PATH_INFO', $_SERVER) || $_SERVER['PATH_INFO']==='/'){
-    require_once 'listagem-videos.php';
+    $controller = new VideoListController($videoRepository);
 }elseif($_SERVER['PATH_INFO']==='/novo-video'){
     if($_SERVER['REQUEST_METHOD']==='GET'){
-        require_once 'formulario.php';
+        $controller = new VideoFormController($videoRepository);
     } elseif($_SERVER['REQUEST_METHOD']==='POST'){
-        require_once 'novo-video.php';
+        $controller = new NewVideoController($videoRepository);
     }
 }elseif($_SERVER['PATH_INFO']=== '/editar-video'){
     if($_SERVER['REQUEST_METHOD']==='GET'){
-        require_once 'formulario.php';
+       $controller = new VideoFormController($videoRepository);
     } elseif($_SERVER['REQUEST_METHOD']==='POST'){
-        require_once 'editar-video.php';
+       $controller = new EditVideoController($videoRepository);
     }
 }elseif($_SERVER['PATH_INFO']=== '/remover-video'){
-    require_once 'remover-video.php';
+    $controller = new DeleteVideoController($videoRepository);
+} else {
+   
+   $controller = new Error404Controller();
 }
+
+$controller->processaRequisicao();
