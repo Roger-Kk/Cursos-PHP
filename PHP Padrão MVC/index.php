@@ -36,6 +36,15 @@ $routes = require_once __DIR__ . '/config/routes.php';
 $pathInfo = $_SERVER['PATH_INFO'] ?? '/';
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 
+//Inicializar a sessão, guardando cookies de login e validando ao carregar
+session_start();
+session_regenerate_id();
+$isLoginRoute = $pathInfo === '/login';
+if(!array_key_exists('logado', $_SESSION) && !$isLoginRoute){
+    header('Location: /login');
+    return;
+}
+
 $key = "$httpMethod|$pathInfo";
 if(array_key_exists($key, $routes)){
     $controllerClass = $routes["$httpMethod|$pathInfo"];
@@ -43,6 +52,11 @@ if(array_key_exists($key, $routes)){
 } else {
     $controller = new Error404Controller();
 }
+
+
+
+
+
 /* TRECHO DE COD QUE FOI SUBSTITUIDO PELO ROUTER: 
 
 if(!array_key_exists('PATH_INFO', $_SERVER) || $_SERVER['PATH_INFO']==='/'){
