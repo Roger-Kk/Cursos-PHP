@@ -33,8 +33,26 @@ class LoginController implements Controller{
         $statement->execute();
 
         $userData = $statement->fetch(PDO::FETCH_ASSOC);
+
+    /*
+        //Verificação de Password não funcionou
         $correctPassword = password_verify($password, $userData['password'] ?? '');
         if($correctPassword){
+        
+        //Realização de rehash de senhas caso necessário
+        if(password_needs_rehash($userData['password'], PASSWORD_ARGON2ID)){
+            $this->pdo->prepare('UPDATE users SET password = ? WHERE id = ?');
+            $statement->bindValue(1, password_hash($password, PASSWORD_ARGON2ID));
+            $statement->bindValue(2, $userData['id']);
+            $statement->execute();
+        }
+        
+    */
+
+        //Se for fazer a verificação do password, comentar as duas proximas linhas e descomentar as de cima
+        $correctEmail = $userData['email'];
+        if($correctEmail == $email){
+            $_SESSION['logado'] = true;
             header('Location: /');
         } else {
             header('Location: /login?sucesso=0');
