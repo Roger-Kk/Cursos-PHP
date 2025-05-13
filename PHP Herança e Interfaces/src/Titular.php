@@ -1,32 +1,19 @@
 <?php
 
-class Titular
+//Ao definir que uma classe extende a outra, significa que ela herda tudo que a outra classe tem e mais as propriedade e métodos dessa nova classe
+class Titular extends Pessoa
 {
-    private $cpf;
-    private $nome;
+    private $endereco;
 
-    public function __construct(CPF $cpf, string $nome)
+    public function __construct(CPF $cpf, string $nome, Endereco $endereco)
     {
         $this->cpf = $cpf;
         $this->validaNomeTitular($nome);
         $this->nome = $nome;
+        $this->endereco = $endereco;
     }
 
-    public function recuperaCpf(): string
-    {
-        return $this->cpf->recuperaNumero();
-    }
-
-    public function recuperaNome(): string
-    {
-        return $this->nome;
-    }
-
-    private function validaNomeTitular(string $nomeTitular)
-    {
-        if (strlen($nomeTitular) < 5) {
-            echo "Nome precisa ter pelo menos 5 caracteres";
-            exit();
-        }
+    public function recuperaEndereco(): Endereco{
+        return $this->endereco;
     }
 }
