@@ -2,7 +2,8 @@
 
 namespace Alura\Banco\Modelo; 
 
-class CPF
+final class CPF //Uma classe final significa que outras classes não consegue se estender a partir dela, ou seja, essa é a classe final. 
+                //Isso também pode ser aplicado aos métodos, impedindo que estes sejam sobrescritos
 {
     private $numero;
 

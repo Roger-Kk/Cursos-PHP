@@ -1,12 +1,14 @@
 <?php
 
-namespace Alura\Banco\Modelo\Conta; 
+namespace Alura\Banco\Modelo\Conta;
+
+use Alura\Banco\Modelo\Autenticavel;
 use Alura\Banco\Modelo\Pessoa;
 use Alura\Banco\Modelo\CPF;
 use Alura\Banco\Modelo\Endereco;
 
 //Ao definir que uma classe extende a outra, significa que ela herda tudo que a outra classe tem e mais as propriedade e métodos dessa nova classe
-class Titular extends Pessoa
+class Titular extends Pessoa implements Autenticavel
 {
     private $endereco;
 
@@ -18,5 +20,10 @@ class Titular extends Pessoa
 
     public function recuperaEndereco(): Endereco{
         return $this->endereco;
+    }
+
+    public function podeAutenticar(string $senha): bool
+    {
+        return $senha === '0000';
     }
 }

@@ -29,4 +29,20 @@ class Endereco{
     public function recuperaNumero(): string {
         return $this->numero;
     }
+
+    //Métodos especiais do PHP iniciam com " __ "
+
+    //Método para retornar string 
+    public function __toString(): string
+    {
+        return `{$this->rua}, {$this->numero}, {$this->bairro}, {$this->cidade}`;
+    }
+
+    //Método para chamar uma função getter do objeto passando como parâmetro o atributo
+    public function __get (string $nomeAtributo){
+
+        $metodo = 'recupera' . ucfirst($nomeAtributo);
+        return $this->$metodo;
+    }
+    
 }

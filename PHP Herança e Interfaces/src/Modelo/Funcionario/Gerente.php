@@ -2,7 +2,10 @@
 
 namespace Alura\Banco\Modelo\Funcionario;
 
-class Gerente extends Funcionario{
+use Alura\Banco\Modelo\Autenticavel;
+
+//É possível extender de apenas uma classe, mas implementar de várias interfaces
+class Gerente extends Funcionario implements Autenticavel{
 
     public function calculaBonificacao(): float{
         return $this->recuperaSalario() * 1;
