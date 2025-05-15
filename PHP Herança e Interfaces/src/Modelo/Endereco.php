@@ -4,6 +4,8 @@ namespace Alura\Banco\Modelo;
 
 class Endereco{
 
+    //Ao inserir o "use" dentro de uma classe, significa que o conteúdo da Trait será inserido na classe.
+    use AcessoPropriedades;
     private string $cidade;
     private string $bairro; 
     private string $rua; 
@@ -39,10 +41,12 @@ class Endereco{
     }
 
     //Método para chamar uma função getter do objeto passando como parâmetro o atributo
+    //Esse método deixa de ser necessário aqui, pois será passado pela Trait AcessoPropriedades
+    /*
     public function __get (string $nomeAtributo){
 
         $metodo = 'recupera' . ucfirst($nomeAtributo);
         return $this->$metodo;
     }
-    
+    */
 }

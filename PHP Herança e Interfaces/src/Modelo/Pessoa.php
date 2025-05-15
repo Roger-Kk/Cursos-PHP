@@ -4,6 +4,7 @@ namespace Alura\Banco\Modelo;
 
 class Pessoa {
 
+    use AcessoPropriedades; //chamando a Trait, inserindo o conteúdo dela na classe
     protected string $nome; 
     private $cpf; 
 
