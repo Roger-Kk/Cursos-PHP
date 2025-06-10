@@ -1,9 +1,14 @@
 <?php
 
-class Conta
+namespace Alura\Banco\Modelo\Conta; 
+use Alura\Banco\Modelo\Conta\Titular;
+
+//Uma classe abstrata possui pelo menos um método abstrado, que são métodos definidos na classe, 
+//mas sua funcionalidade é definida na classe que extendê-la. 
+abstract class Conta
 {
     private $titular;
-    private $saldo;
+    protected $saldo;
     private static $numeroDeContas = 0;
 
     public function __construct(Titular $titular)
@@ -19,17 +24,19 @@ class Conta
         self::$numeroDeContas--;
     }
 
-    public function saca(float $valorASacar): void
+    public function sacar(float $valorASacar): void
     {
-        if ($valorASacar > $this->saldo) {
+        $tarifaSaque = $valorASacar * $this->percentualTarifa();
+        $valorSaque = $valorASacar + $tarifaSaque;
+        if ($valorSaque > $this->saldo) {
             echo "Saldo indisponível";
             return;
         }
 
-        $this->saldo -= $valorASacar;
+        $this->saldo -= $valorSaque;
     }
 
-    public function deposita(float $valorADepositar): void
+    public function depositar(float $valorADepositar): void
     {
         if ($valorADepositar < 0) {
             echo "Valor precisa ser positivo";
@@ -69,4 +76,7 @@ class Conta
     {
         return self::$numeroDeContas;
     }
+
+    abstract protected function percentualTarifa(): float; //Toda classe que extender essa classe, deverá implementar esse método
+   
 }
