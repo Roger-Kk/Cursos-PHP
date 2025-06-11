@@ -5,7 +5,12 @@ declare(strict_types=1);
 
 namespace Alura\MVC\Controller;
 
-class LoginFormController extends ControlerWithHtml implements Controller {
+use Alura\MVC\Helper\HtmlRenderTrait;
+
+//class LoginFormController extends ControlerWithHtml implements Controller {
+class LoginFormController implements Controller {
+
+    use HtmlRenderTrait;
 
     public function processaRequisicao(): void {
         //Verificação se a informação de sessão logada existe, duas formas de fazer isso:

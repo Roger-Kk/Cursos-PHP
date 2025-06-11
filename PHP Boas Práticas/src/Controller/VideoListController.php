@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Alura\MVC\Controller;
 use Alura\MVC\Repository\VideoRepository;
+use Alura\MVC\Helper\HtmlRenderTrait;
 
-class VideoListController extends ControlerWithHtml implements Controller{
+//Ao usar a Trait HtmlRenderTrait não precisa mais extender do ControlerWithHtml a classe abstrata
+//class VideoListController extends ControlerWithHtml implements Controller{
+class VideoListController implements Controller{
+
+    use HtmlRenderTrait;
 
     #receber uma instância do PDO
     public function __construct(private VideoRepository $videoRepository){
