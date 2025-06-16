@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Alura\MVC\Controller;
 
 use PDO;
+use Nyholm\Psr7\Response;
 use Alura\MVC\Helper\FlashMessageTrait;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class LoginController implements Controller{
 
@@ -15,7 +18,7 @@ class LoginController implements Controller{
   
     }
 
-    public function processaRequisicao():void{
+    public function processaRequisicao(ServerRequestInterface $request):ResponseInterface{
 
         //Estabelece a conexão com banco de dados
         $host = 'localhost';
@@ -40,7 +43,11 @@ class LoginController implements Controller{
     /*
         //Verificação de Password não funcionou
         $correctPassword = password_verify($password, $userData['password'] ?? '');
-        if($correctPassword){
+        if(!$correctPassword){
+        $this->addErrorMessage('Usuário ou senha inválidos');
+        return new Response(302, [
+            'Location' => '/login'
+        ]);
         
         //Realização de rehash de senhas caso necessário
         if(password_needs_rehash($userData['password'], PASSWORD_ARGON2ID)){
@@ -56,11 +63,17 @@ class LoginController implements Controller{
         $correctEmail = $userData['email'];
         if($correctEmail == $email){
             $_SESSION['logado'] = true;
-            header('Location: /');
+            //header('Location: /');
+            return new Response(302, [
+                'Location' => '/'
+            ]);
         } else {
             //enviar uma mensagem para /login
             $this->addErrorMessage("Usuário ou senha inválidos");
-            header('Location: /login?deuerro');
+            //header('Location: /login');
+            return new Response(302, [
+                'Location' => '/'
+            ]);
         }
     }
 }

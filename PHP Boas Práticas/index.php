@@ -12,6 +12,8 @@ use Alura\MVC\Controller\{
     VideoFormController,
 };
 use Alura\MVC\Repository\VideoRepository;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7Server\ServerRequestCreator;
 
 require_once __DIR__.'/vendor/autoload.php';
 
@@ -53,9 +55,29 @@ if(array_key_exists($key, $routes)){
     $controller = new Error404Controller();
 }
 
+$psr17Factory = new \Nyholm\Psr7\Factory\Psr17Factory();
 
+$creator = new \Nyholm\Psr7Server\ServerRequestCreator(
+    $psr17Factory, //ServerRequestFactory
+    $psr17Factory, //UriFactory
+    $psr17Factory, //UploadedFileFactory
+    $psr17Factory, //StreamFactory
+);
 
+//Usar a interface psr17, método fromGlobals(), permite acesso a _POST, _GET, etc
+$request = $creator->fromGlobals();
 
+/** @var Controller $controller */
+$response = $controller->processaRequisicao($request);
+
+http_response_code($response->getStatusCode());
+foreach ($response->getHeaders() as $name => $values){
+    foreach($values as $value){
+        header(sprintf('%s: %s', $name, $value), false);
+    }
+}
+
+echo $response->getBody();
 
 /* TRECHO DE COD QUE FOI SUBSTITUIDO PELO ROUTER: 
 
@@ -80,4 +102,3 @@ if(!array_key_exists('PATH_INFO', $_SERVER) || $_SERVER['PATH_INFO']==='/'){
    $controller = new Error404Controller();
 }
 */
-$controller->processaRequisicao();
