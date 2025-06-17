@@ -3,17 +3,10 @@
 declare(strict_types=1);
 
 use Alura\MVC\Controller\{
-    VideoListController,
     Controller,
-    DeleteVideoController,
-    EditVideoController,
     Error404Controller,
-    NewVideoController,
-    VideoFormController,
 };
 use Alura\MVC\Repository\VideoRepository;
-use Nyholm\Psr7\Factory\Psr17Factory;
-use Nyholm\Psr7Server\ServerRequestCreator;
 
 require_once __DIR__.'/vendor/autoload.php';
 
