@@ -3,6 +3,7 @@
 Repositório para aprendizado de PHP. Cursos Alura PHP.
 
 Cada pasta corresponde a um curso, com arquivos contendo código PHP para seu devido fim.
+📖 **[Ver os exemplos e como rodar cada um](https://roger-kk.github.io/Cursos-PHP/)**
 
 ## Conceitos iniciais
 
