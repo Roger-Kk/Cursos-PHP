@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursos PHP — Como rodar os exemplos</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-2: #1c2129;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #7f96d6;
+      --ok: #3fb950;
+      --warn: #d29922;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 3rem 1.25rem 4rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+    }
+
+    main { max-width: 800px; margin: 0 auto; }
+
+    h1 { font-size: 2rem; margin: 0 0 0.6rem; letter-spacing: -0.01em; }
+
+    .intro { color: var(--muted); margin: 0 0 2.25rem; max-width: 62ch; }
+
+    h2 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin: 2.75rem 0 0.9rem;
+      font-weight: 600;
+    }
+
+    /* --- Pré-requisitos --- */
+    .setup {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.35rem 1.5rem;
+    }
+
+    .setup ol { margin: 0; padding-left: 1.3rem; }
+    .setup li { margin-bottom: 0.75rem; }
+    .setup li:last-child { margin-bottom: 0; }
+
+    .prompt { color: var(--accent); font-weight: 600; }
+
+    /* --- Cards de exemplo --- */
+    .repo {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .repo-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .repo-title { font-weight: 600; font-size: 1.05rem; margin: 0; }
+
+    .path {
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.1rem 0.45rem;
+    }
+
+    .repo-desc { color: var(--muted); font-size: 0.92rem; margin: 0 0 1rem; }
+
+    .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      font-weight: 600;
+      margin: 0 0 0.45rem;
+    }
+
+    pre {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.8rem 1rem;
+      overflow-x: auto;
+      margin: 0 0 0.9rem;
+    }
+
+    code {
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.85rem;
+    }
+
+    pre code { color: var(--text); }
+
+    p code, li code {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.08rem 0.35rem;
+      font-size: 0.85em;
+    }
+
+    .steps { margin: 0 0 0.9rem; padding-left: 1.3rem; font-size: 0.92rem; }
+    .steps li { margin-bottom: 0.35rem; }
+    .steps li:last-child { margin-bottom: 0; }
+
+    .url {
+      display: inline-block;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--accent);
+      word-break: break-all;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 0.12rem 0.5rem;
+      border-radius: 999px;
+      margin-left: auto;
+    }
+
+    .tag-run   { color: var(--ok);   border: 1px solid var(--ok); }
+    .tag-local { color: var(--warn); border: 1px solid var(--warn); }
+
+    .note {
+      margin-top: 2.5rem;
+      padding: 0.9rem 1.1rem;
+      border-left: 3px solid var(--border);
+      color: var(--muted);
+      font-size: 0.87rem;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Cursos PHP</h1>
+    <p class="intro">
+      Exemplos do repositório, com o passo a passo para rodar cada um. Alguns
+      abrem direto no navegador; outros precisam rodar na sua máquina, porque
+      dependem do interpretador PHP.
+    </p>
+
+    <h2>Antes de começar</h2>
+    <div class="setup">
+      <ol>
+        <li>
+          <span class="prompt">Instale o PHP.</span> Baixe em
+          <a class="url" href="[php.net](https://www.php.net/downloads)">php.net/downloads</a>.
+          Para conferir se funcionou, abra o terminal e rode:
+          <pre><code>php -v</code></pre>
+          Se aparecer a versão, está pronto. Se der "comando não encontrado", o PHP
+          não está no PATH — reinstale marcando a opção de adicionar ao PATH.
+        </li>
+        <li>
+          <span class="prompt">Baixe o repositório.</span> Copie tudo para o seu
+          computador com:
+          <pre><code>git clone [github.com](https://github.com/Roger-Kk/Cursos-PHP.git)
+cd Cursos-PHP</code></pre>
+          Sem Git instalado? Use o botão verde <em>Code → Download ZIP</em> e descompacte.
+        </li>
+        <li>
+          <span class="prompt">Entre na pasta do exemplo.</span> Cada bloco abaixo
+          mostra o comando de terminal para entrar na pasta certa. Os nomes têm
+          espaços, então vão entre aspas:
+          <pre><code>cd "PHP Padrão MVC"</code></pre>
+          O terminal precisa estar sempre na pasta que contém o arquivo <code>composer.json</code>.
+        </li>
+        <li>
+          <span class="prompt">Instale as dependências.</span> Só é necessário nos
+          exemplos que usam Composer (os marcados como <em>rodar localmente</em>):
+          <pre><code>composer install</code></pre>
+          Se não tiver o Composer, instale em
+          <a class="url" href="[getcomposer.org](https://getcomposer.org/download/)">getcomposer.org</a>.
+          A pasta <code>vendor/</code> já está no repositório, mas rodar o
+          <code>composer install</code> garante que tudo esteja no lugar.
+        </li>
+        <li>
+          <span class="prompt">Inicie o servidor.</span> Servidor embutido do PHP,
+          apontando para a pasta pública do projeto:
+          <pre><code>php -S localhost:8000 -t public</code></pre>
+          Depois abra <a class="url" href="[localhost](http://localhost:8000)">localhost:8000</a>
+          no navegador. Para parar, use <code>Ctrl+C</code> no terminal.
+          <br><br>
+          Se a pasta for <code>public/</code>, use <code>-t public</code>. Se o
+          projeto não tiver essa pasta, aponte para a raiz:
+          <code>php -S localhost:8000</code>.
+        </li>
+      </ol>
+    </div>
+
+    <h2>Exemplos rodando no GitHub Pages</h2>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">PHP Padrão MVC</h3>
+        <span class="path">PHP Padrão MVC/</span>
+        <span class="tag tag-run">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Arquitetura Model-View-Controller com <code>config/</code>,
+        <code>src/</code> e <code>views/</code>.
+      </p>
+
+      <p class="label">Para gerar a versão estática</p>
+      <ol class="steps">
+        <li>No terminal: <code>cd "PHP Padrão MVC"</code></li>
+        <li>Instale as dependências: <code>composer install</code></li>
+        <li>Suba o servidor: <code>php -S localhost:8000 -t public</code></li>
+        <li>Abra <a class="url" href="[localhost](http://localhost:8000)">localhost:8000</a>, confira a página</li>
+        <li>Salve o HTML gerado (no navegador: <em>Ctrl+S</em>) dentro de <code>docs/mvc/</code></li>
+      </ol>
+
+      <p class="label">Resultado publicado</p>
+      <a class="url" href="mvc/index.html">mvc/index.html</a>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">PHP Boas Práticas</h3>
+        <span class="path">PHP Boas Práticas/</span>
+        <span class="tag tag-run">abre no navegador</span>
+      </div>
+      <p class="repo-desc">
+        Mesma estrutura MVC, com <code>composer.json</code> e
+        <code>composer.lock</code>, focada em convenções e qualidade de código.
+      </p>
+
+      <p class="label">Para gerar a versão estática</p>
+      <ol class="steps">
+        <li>No terminal: <code>cd "PHP Boas Práticas"</code></li>
+        <li>Instale as dependências: <code>composer install</code></li>
+        <li>Suba o servidor: <code>php -S localhost:8000 -t public</code></li>
+        <li>Abra <a class="url" href="[localhost](http://localhost:8000)">localhost:8000</a>, confira a página</li>
+        <li>Salve o HTML gerado dentro de <code>docs/boas-praticas/</code></li>
+      </ol>
+
+      <p class="label">Resultado publicado</p>
+      <a class="url" href="boas-praticas/index.html">boas-praticas/index.html</a>
+    </div>
+
+    <h2>Exemplos que rodam só na sua máquina</h2>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">PHP Conceitos I — Dados e loops</h3>
+        <span class="path">PHP Conceitos I - Dados e loops/</span>
+        <span class="tag tag-local">rodar localmente</span>
+      </div>
+      <p class="repo-desc">
+        Variáveis, condicionais e laços. Arquivos: <code>variaveis.php</code>,
+        <code>if.php</code>, <code>for_while.php</code> e <code>desafios.php</code>.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "PHP Conceitos I - Dados e loops"
+php variaveis.php
+php if.php
+php for_while.php
+php desafios.php</code></pre>
+      <p class="repo-desc">
+        São scripts sem interface web — o resultado aparece no próprio terminal.
+        Troque o nome do arquivo para rodar cada um.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">PHP Criando sua aplicação</h3>
+        <span class="path">PHP Criando sua aplicação/</span>
+        <span class="tag tag-local">rodar localmente</span>
+      </div>
+      <p class="repo-desc">
+        O projeto <code>screenMatch.php</code>, construído ao longo do curso,
+        mais <code>desafios.php</code>.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "PHP Criando sua aplicação"
+php screenMatch.php</code></pre>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">PHP Organize seu código</h3>
+        <span class="path">PHP Organize seu código/</span>
+        <span class="tag tag-local">rodar localmente</span>
+      </div>
+      <p class="repo-desc">
+        Separação entre <code>public/</code> e <code>src/</code>, com leitura de
+        dados de <code>filme.json</code>.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "PHP Organize seu código"
+php -S localhost:8000 -t public</code></pre>
+      <p class="repo-desc">
+        Depois abra <a class="url" href="[localhost](http://localhost:8000)">localhost:8000</a>.
+        O arquivo <code>IniciarServidorWeb.txt</code> na pasta tem as mesmas
+        instruções. Para importar os dados, rode também
+        <code>php importar.php</code>.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">PHP Orientação a Objetos</h3>
+        <span class="path">PHP Orientação a Objetos/src/</span>
+        <span class="tag tag-local">rodar localmente</span>
+      </div>
+      <p class="repo-desc">
+        Classes, objetos e métodos, organizados em <code>src/</code>.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "PHP Orientação a Objetos"
+php src/NOME-DO-ARQUIVO.php</code></pre>
+      <p class="repo-desc">
+        Abra a pasta <code>src/</code> e veja quais arquivos existem — cada um é um
+        script independente que se roda com <code>php</code>.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">PHP Herança e Interfaces</h3>
+        <span class="path">PHP Herança e Interfaces/</span>
+        <span class="tag tag-local">rodar localmente</span>
+      </div>
+      <p class="repo-desc">
+        Herança, interfaces, autenticação, autoload, bonificações e acesso a banco.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "PHP Herança e Interfaces"
+php autenticacao.php
+php bonificacoes.php
+php testeSaque.php</code></pre>
+      <p class="repo-desc">
+        Os arquivos usam <code>autoload.php</code> para carregar as classes de
+        <code>src/</code> — rode sempre a partir da raiz da pasta do curso.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">PHP Interface, Traits e Erros</h3>
+        <span class="path">PHP Interface, Traits e Erros/</span>
+        <span class="tag tag-local">rodar localmente</span>
+      </div>
+      <p class="repo-desc">
+        Traits, exceções e tratamento de erros, com o projeto
+        <code>screen-match/</code>.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "PHP Interface, Traits e Erros"
+php primeiro-programa.php
+php conta.php
+php entrada.php</code></pre>
+      <p class="repo-desc">
+        Para o projeto <code>screen-match/</code>, entre na pasta dele e rode os
+        scripts de lá com <code>php NOME-DO-ARQUIVO.php</code>.
+      </p>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">PHP Composer</h3>
+        <span class="path">PHP Composer/</span>
+        <span class="tag tag-local">rodar localmente</span>
+      </div>
+      <p class="repo-desc">
+        Gerenciamento de dependências com <code>composer.json</code> e
+        <code>composer.lock</code>.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "PHP Composer"
+composer install
+php buscar-cursos.php</code></pre>
+    </div>
+
+    <div class="repo">
+      <div class="repo-head">
+        <h3 class="repo-title">PHP Banco de Dados</h3>
+        <span class="path">PHP Banco de Dados/</span>
+        <span class="tag tag-local">rodar localmente</span>
+      </div>
+      <p class="repo-desc">
+        Integração com SQLite (<code>banco.sqlite</code>): conexão, criação de
+        turma e CRUD de alunos.
+      </p>
+      <p class="label">Como rodar</p>
+      <pre><code>cd "PHP Banco de Dados"
+composer install
+php criarTurma.php
+php inserirAluno.php
+php listaAlunos.php</code></pre>
+      <p class="repo-desc">
+        Esses scripts alteram o arquivo <code>banco.sqlite</code>. Para desfazer
+        mudanças, restaure o arquivo com
+        <code>git checkout banco.sqlite</code>. O <code>removerAluno.php</code>
+        apaga registros.
+      </p>
+    </div>
+
+    <div class="note">
+      O GitHub Pages executa apenas arquivos estáticos, por isso os exemplos com
+      PHP aparecem aqui como instruções e não como páginas interativas. Para vê-los
+      rodando, use o servidor embutido na sua máquina — é o mesmo comando
+      <code>php -S</code> mostrado acima.
+    </div>
+
+    <footer>
+      Repositório: <a href="[github.com](https://github.com/Roger-Kk/Cursos-PHP)">Roger-Kk/Cursos-PHP</a>
+    </footer>
+  </main>
+</body>
+</html>
